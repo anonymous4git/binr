@@ -1,0 +1,13 @@
+root: "../../../HCP_25/subject/Diffusion_MNIWarped"
+data: "../../../HCP_25/subject/Diffusion_MNIWarped/dwi_MNI152.nii.gz"
+mask: "../../0_multishell_template/MNI152_T1_2mm_brain_mask_dil.nii.gz"
+bvec: "../../../HCP_25/subject/Diffusion_MNIWarped/bvecs.sorted"
+bval: "../../../HCP_25/subject/Diffusion_MNIWarped/bvals.sorted"
+
+train_split: 0.1 #0.1 # 0.3, 0.5, 0.7
+bval_train: "all"
+bval_val: "all"
+val_split: 0.3
+normalize_0_1: True
+
+

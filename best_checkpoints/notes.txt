@@ -1,0 +1,7 @@
+
+description of the checkpoint files here to keep a bit of an overview
+
+
+inr-leaky-HCP.ckpt          -   [!] old, doesnt run with optimized pos_encoder
+inr-leaky-MUDI.ckpt         -   [!] ...
+inr-wiren-template.ckp      -   trained on 64 epochs of the optimized setup

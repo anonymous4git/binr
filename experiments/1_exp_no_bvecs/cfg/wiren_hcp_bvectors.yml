@@ -1,0 +1,55 @@
+root: "../../HCP_25/subject/Diffusion_MNIWarped"
+data: "../../HCP_1200_derived/subject/dwi_MNI152.nii.gz"
+mask: "../0_multishell_template/MNI152_T1_2mm_brain_mask_dil.nii.gz"
+bvec: "../../HCP_1200_derived/subject/bvecs.sorted"
+bval: "../../HCP_1200_derived/subject/bvals.sorted"
+
+# training optimization
+preload_to_gpu: True
+train_log_interval: 1 # log every ... batches only for better gpu usage
+
+# model training
+train_batch_size: 262_144 # 256, prev.4096 (?)
+epochs: 16 # 19
+
+# model training hyperparameters
+lr: 0.001
+use_cos_lrsheduler: True
+
+# model config
+in_size: 301 # 256 + 45 (lmax=8, antipodal symmetric) ,7 for [px, py, pz, b, qx, qy, qz]
+hidden_size: 256
+out_size: 1
+num_layers: 3
+
+# validation settings
+val_mode: "epoch" # either 'step' or 'epoch'
+val_skip: True
+val_batch_size: 25230
+val_slice_axis: 2
+val_slice_offset: 45
+val_check_interval: 50 # prop. need less often
+val_sanity_steps: 0
+val_b_idx: [0, 48, 96, 144]
+val_export_dwi: False
+
+bval_train: "all"
+bval_val: "all"
+train_split: 0.1 #0.1 # 0.3, 0.5, 0.7
+val_split: 0.3
+
+# tb logging
+log_coords_raw: False
+log_coords_encoded: False
+steps_per_viz: 500 # Visualization frequency in training steps
+
+# checkpointing
+checkpoint_dirpath: "OUTPUTS/sample_bvectors/subject/split_0.1"
+checkpoint_filename: "inr-{step}"
+checkpoint_save_top_k: -1 # Keep all checkpoints
+checkpoint_every_n_train_steps: 100
+checkpoint_path: "best_checkpoints/inr-wiren-template.ckpt" # Path to load checkpoint from (uncomment and set to load from checkpoint)
+network_name: "wiren_mlp"
+evaluation_checkpoint: "OUTPUTS/sample_bvectors/subject/last.ckpt"
+pos_encoder: True
+normalize_0_1: True
